@@ -61,10 +61,96 @@ seila({
 // Se chamar assim, como na linha abaixo, não vai funcionar.
 //seila('pedro')
 
+// Never
+// 
+function loopInfinito(): never {
+    while (true) {}
+}
+
+function erro(mensagem: string): never{
+    throw new Error(mensagem)
+}
+
+function falha(){
+    return erro('Algo falhou!!!')
+} // Este o `TypeScript` irá inferir que é uma função do tipo never.
 
 
+// Union Types, neste é possível informar que aceita tanto um quanto ao outro
+
+const nota: string | number = 5;
+
+//ou 
+
+function exibirNota(nota: number | string | boolean){
+    console.log(`A nota é ${nota}`)
+}
+
+exibirNota(10)
+exibirNota('10')
+exibirNota(9.3)
+exibirNota(false)
+exibirNota(true)
+
+// Alias
+
+type Funcionario = {
+    Nome: string;
+    Sobrenome: string;
+    Sexo: string;
+    dataNascimento: Date;  
+}
+
+const funcionarios: Funcionario[] = [
+    {
+    Nome: 'José',
+    Sobrenome: 'Maria',
+    Sexo:'Masculino',
+    dataNascimento: new Date()
+    },
+    {
+    Nome: 'Ana',
+    Sobrenome: 'Maria',
+    Sexo: 'Feminino',
+    dataNascimento: new Date()
+    }
+];
+
+function trataFuncionarios(funcionarios: Funcionario[]){
+    for (let funcionario of funcionarios){
+        console.log('Nome dos Funcionários: ', funcionario.Nome);
+    }
+}
 
 
+// nulos e opcionais
+
+let altura: number | null = 1.6
+altura = null;
+
+type Contato = {
+    nome: string;
+    telefone1: string;
+    telefone2?: string;
+}
+
+const contato: Contato = {
+    nome: 'Pedro',
+    telefone1: '12346'
+}
+
+// Type Assertion
+
+const minhaIdade: any = 23; // Declarou como `type any` 
+(minhaIdade as number).toString(); // Você como programador está afirmando qual `type` é a `srtring`
+// Ou declarar desta forma
+<number>minhaIdade.toString()
+
+
+const input = document.getElementById('numero1') as HTMLInputElement; // Estou afirmando que é um input.
+// Ou declara desta forma
+// const input = <HTMLInputElement>document.getElementById('numero1')
+console.log(input.value);
 
 
 
